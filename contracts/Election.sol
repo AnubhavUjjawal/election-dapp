@@ -19,6 +19,7 @@ contract Election{
         candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
         candidatesCount++;
     }
+    event votedEvent(uint indexed _candidateId);
     function vote(uint _candidateId) public{
         // has not already voted
         require(!voters[msg.sender], "You have already voted.");
@@ -26,5 +27,6 @@ contract Election{
         require(_candidateId >= 0 && _candidateId < candidatesCount, "Invalid candidate");
         voters[msg.sender] = true;
         candidates[_candidateId].voteCount += 1;
+        emit votedEvent(_candidateId);
     }
 }
